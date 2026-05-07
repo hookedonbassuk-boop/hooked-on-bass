@@ -1,0 +1,10 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: hooked-on-bass-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ../:/var/www/hooked-on-bass:ro
+      - ./nginx-hookedonbass.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
