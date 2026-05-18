@@ -17,6 +17,8 @@
 
 <body>
 
+  <!-- INTRO -->
+
   <div class="intro-overlay">
     <img
       src="Logos/hooked-on-bass-logo.png"
@@ -24,6 +26,8 @@
       class="intro-logo"
     />
   </div>
+
+  <!-- HEADER -->
 
   <header class="site-header">
 
@@ -46,6 +50,8 @@
 
   </header>
 
+  <!-- MAIN -->
+
   <main>
 
     <section class="hero">
@@ -60,8 +66,6 @@
           Private Bass Guitar Tuition
         </h1>
 
-       
-
         <div class="hero-buttons">
           <a href="lessons.html">Lessons</a>
           <a href="servicing.html">Bass Servicing</a>
@@ -71,6 +75,8 @@
       </div>
 
     </section>
+
+    <!-- PHOTOS -->
 
     <section class="media-grid">
 
@@ -91,6 +97,8 @@
 
     </section>
 
+    <!-- VIDEO -->
+
     <section class="video-section">
 
       <iframe
@@ -101,47 +109,65 @@
 
     </section>
 
+    <!-- NAVIGATION -->
+
     <section class="navigation-links">
 
       <a href="about.html">
         <h3>About</h3>
-        <p>Teaching philosophy, background and musical approach.</p>
+        <p>
+          Teaching philosophy, background and musical approach.
+        </p>
       </a>
 
       <a href="lessons.html">
         <h3>Lessons</h3>
-        <p>One-to-one tuition for beginners through to advanced players.</p>
+        <p>
+          One-to-one tuition for beginners through to advanced players.
+        </p>
       </a>
 
       <a href="servicing.html">
         <h3>Bass Servicing</h3>
-        <p>Instrument care, setups and maintenance support.</p>
+        <p>
+          Instrument care, setups and maintenance support.
+        </p>
       </a>
 
       <a href="media.html">
         <h3>Media</h3>
-        <p>Performance clips, demonstrations and studio work.</p>
+        <p>
+          Performance clips, demonstrations and studio work.
+        </p>
       </a>
 
       <a href="portal.html">
         <h3>Student Portal</h3>
-        <p>Future home for lesson resources and premium learning content.</p>
+        <p>
+          Future home for lesson resources and premium learning content.
+        </p>
       </a>
 
       <a href="pricing.html">
         <h3>Pricing</h3>
-        <p>Lesson options and future subscription plans.</p>
+        <p>
+          Lesson options and servicing prices.
+        </p>
       </a>
 
     </section>
 
   </main>
 
+  <!-- FOOTER -->
+
   <footer class="site-footer">
 
     <div class="footer-inner">
 
-      <p>© Hooked On Bass UK</p>
+      <p>
+        © 2021 Hooked On Bass. All rights reserved.
+      </p>
 
       <nav class="footer-nav">
         <a href="about.html">About</a>
@@ -157,6 +183,40 @@
     </div>
 
   </footer>
+
+  <!-- INTRO COOLDOWN SCRIPT -->
+
+  <script>
+    const introOverlay = document.querySelector(".intro-overlay");
+
+    const introCooldownHours = 24;
+
+    const lastIntroPlayed = localStorage.getItem(
+      "hookedOnBassIntroLastPlayed"
+    );
+
+    const now = Date.now();
+
+    const cooldownExpired =
+      !lastIntroPlayed ||
+      now - Number(lastIntroPlayed) >
+      introCooldownHours * 60 * 60 * 1000;
+
+    if (cooldownExpired) {
+
+      localStorage.setItem(
+        "hookedOnBassIntroLastPlayed",
+        now.toString()
+      );
+
+    } else {
+
+      if (introOverlay) {
+        introOverlay.remove();
+      }
+
+    }
+  </script>
 
 </body>
 </html>
