@@ -3,168 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Student Portal | Hooked On Bass</title>
-
-  <meta
-    name="description"
-    content="The Hooked On Bass student portal is coming soon."
-  />
-
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Free tuning and timing tools for Hooked On Bass students." />
+  <link rel="stylesheet" href="style.css?v=20260910" />
+  <link rel="stylesheet" href="portal-tools.css?v=20260910b" />
   <link rel="icon" type="image/png" href="Logos/favicon.png" />
 </head>
+<body class="portal-page">
 
-<body>
-
-  <header class="site-header">
-
-    <nav class="main-nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="lessons.html">Lessons</a>
-      <a href="servicing.html">Servicing</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="media.html">Media</a>
-      <a href="contact.html">Contact</a>
+<header class="site-header">
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="lessons.html">Lessons</a><a href="servicing.html">Servicing</a><a href="pricing.html">Pricing</a><a href="media.html">Media</a><a href="portal.html" aria-current="page">Portal</a><a href="contact.html">Contact</a>
     </nav>
-
-    <a href="index.html" class="logo-link">
-      <img
-        src="Logos/hooked-on-bass-logo.png"
-        alt="Hooked On Bass"
-        class="site-logo"
-      />
-    </a>
-
+    <a href="index.html" class="logo-link"><img src="Logos/hooked-on-bass-logo.png" alt="Hooked On Bass" class="site-logo" /></a>
   </header>
 
+  <div class="hours-taught" role="region" aria-label="Teaching experience">
+    <span>Hours Taught</span><strong data-hours-taught>2,512</strong>
+    <noscript><small>as of 10 September 2026</small></noscript>
+  </div>
   <main>
-
-    <section class="hero page-hero">
-
-      <div class="hero-content">
-
-        <p class="eyebrow">Student Portal</p>
-
-        <h1>Something is being built.</h1>
-
-        <p class="hero-text">
-          A private space for Hooked On Bass students is currently in development.
-        </p>
-
+    <section class="portal-tools" aria-labelledby="practice-tools-heading">
+      <div class="portal-tools-heading"><h1 id="practice-tools-heading">Practice tools</h1></div>
+      <div class="tools-layout">
+        <aside class="tools-menu" aria-label="Practice tool selector">
+          <button class="tool-tab is-active" type="button" data-tool="tuner" aria-selected="true"><span class="tool-tab-icon" aria-hidden="true">♪</span><span><strong>Tuner</strong><small>Standard bass tunings</small></span></button>
+          <button class="tool-tab" type="button" data-tool="metronome" aria-selected="false"><span class="tool-tab-icon" aria-hidden="true">●</span><span><strong>Metronome</strong><small>Tempo, accents and time signatures</small></span></button>
+          <div class="smart-tool-teaser"><span>Coming soon</span><h3>Smart Metronome</h3><p>Changing tempos and silent bars to build stronger internal rhythm.</p></div>
+        </aside>
+        <section class="tool-panel is-active" id="tool-tuner" data-tool-panel="tuner">
+          <div class="tool-panel-head"><div><p class="eyebrow">Tuner</p><h2 id="tuner-heading">E standard</h2></div><span class="tool-status" id="tuner-status" aria-live="polite">Ready</span></div>
+          <p class="tool-description">Choose a tuning, play a reference string and match your bass to the note by ear.</p>
+          <label class="tuning-selector" for="tuner-tuning"><span>Tuning</span><select id="tuner-tuning"><option value="e-standard" selected>E standard</option><option value="five-string">5-string (B E A D G)</option><option value="drop-d">Drop D</option><option value="d-standard">D standard</option><option value="eb-standard">E♭ standard</option><option value="drop-c">Drop C</option><option value="c-standard">C standard</option></select></label>
+          <div class="tuner-display" aria-live="polite"><span>Now playing</span><strong id="tuner-note">—</strong><small id="tuner-frequency">Choose a string below</small></div>
+          <div class="tuner-strings" role="group" aria-label="Bass string reference tones">
+            <button class="tuner-string" type="button" data-string-index="0"><span class="tuner-note-icon">E</span><strong>E string</strong><span class="tuner-led" aria-hidden="true"></span></button>
+            <button class="tuner-string" type="button" data-string-index="1"><span class="tuner-note-icon">A</span><strong>A string</strong><span class="tuner-led" aria-hidden="true"></span></button>
+            <button class="tuner-string" type="button" data-string-index="2"><span class="tuner-note-icon">D</span><strong>D string</strong><span class="tuner-led" aria-hidden="true"></span></button>
+            <button class="tuner-string" type="button" data-string-index="3"><span class="tuner-note-icon">G</span><strong>G string</strong><span class="tuner-led" aria-hidden="true"></span></button>
+          </div>
+          <div class="tool-controls tuner-controls"><button id="tuner-stop" class="tool-button tool-button-secondary" type="button" disabled>Stop tone</button><label class="volume-control"><span>Volume</span><input id="tuner-volume" type="range" min="0" max="100" value="90" aria-label="Tuner volume"><output id="tuner-volume-value">90%</output></label></div>
+          <p class="tool-safety-note">Start at a comfortable volume, especially when using headphones.</p>
+        </section>
+        <section class="tool-panel" id="tool-metronome" data-tool-panel="metronome" hidden>
+          <div class="tool-panel-head"><div><p class="eyebrow">Metronome</p><h2>Build your pulse</h2></div><span class="tool-status" id="metronome-status" aria-live="polite">Stopped</span></div>
+          <div class="metronome-settings"><label class="time-signature-control"><span>Time signature</span><select id="time-signature" aria-label="Time signature"><option value="4/4" selected>4/4</option><option value="3/4">3/4</option><option value="5/4">5/4</option><option value="7/4">7/4</option><option value="6/8">6/8</option></select></label></div>
+          <div class="tempo-area"><button class="tempo-step" type="button" data-bpm-step="-3" aria-label="Reduce tempo by three beats per minute">−3</button><label class="tempo-readout"><input id="bpm-input" type="number" min="30" max="240" step="3" value="90" inputmode="numeric" aria-label="Tempo in beats per minute"><span>BPM</span></label><button class="tempo-step" type="button" data-bpm-step="3" aria-label="Increase tempo by three beats per minute">+3</button></div>
+          <input id="bpm-slider" class="tempo-slider" type="range" min="30" max="240" step="3" value="90" aria-label="Tempo slider">
+          <div class="sequencer-wrap"><div class="sequencer-heading"><div><p class="eyebrow">Beat accents</p><h3>Accent pattern</h3></div></div><div class="stress-sequencer" id="stress-sequencer" role="group" aria-label="Beat accent sequencer"></div></div>
+          <div class="beat-lights" id="beat-lights" aria-label="Current beat"></div>
+          <div class="metronome-transport" aria-label="Metronome transport controls"><button id="metronome-play" class="tool-button" type="button">Play</button><button id="metronome-pause" class="tool-button tool-button-secondary" type="button" disabled>Pause</button><button id="metronome-stop" class="tool-button tool-button-secondary" type="button" disabled>Stop</button></div>
+          <div class="metronome-options"><button id="tap-tempo" class="tap-tempo" type="button">Tap tempo</button><label class="volume-control"><span>Volume</span><input id="metronome-volume" type="range" min="0" max="100" value="90" aria-label="Metronome volume"><output id="metronome-volume-value">90%</output></label></div>
+        </section>
       </div>
-
     </section>
-
-    <section class="section split-section">
-
-      <div>
-        <p class="eyebrow">Coming Later</p>
-
-        <h2>More than just lessons.</h2>
+    <section class="portal-future">
+      <div class="portal-future-copy">
+        <p class="eyebrow">Project Atlas</p>
+        <h2>The next chapter is taking shape.</h2>
+        <p>Atlas will bring lessons, practice resources, learning journeys and progress together in one student space. These tools are the first glimpse of what’s coming.</p>
       </div>
-
-      <div>
-        <p>
-          The student portal will grow quietly in the background as Hooked On Bass develops.
-        </p>
-
-        <p>
-          The aim is to create a space that supports students between lessons,
-          keeps useful material in one place and adds more value to the learning process.
-        </p>
-
-        <p>
-          More details will be shared when it is ready.
-        </p>
-      </div>
-
+      <aside class="atlas-companion" aria-label="Atlas says hello">
+        <svg viewBox="0 0 120 156" class="atlas-avatar" aria-hidden="true">
+          <ellipse cx="61" cy="142" rx="35" ry="11" fill="#0d1a26" opacity=".25"/>
+          <g stroke="#172d42" stroke-width="2" stroke-linejoin="round">
+            <path d="M39 105l18 5v29l-18-6z" fill="#172d42"/><path d="M57 110l11-7v29l-11 7z" fill="#112131"/><path d="M65 105l18 5v29l-18-6z" fill="#1d3956"/><path d="M83 110l10-7v29l-10 7z" fill="#112131"/>
+            <path d="M31 59l38-16 29 16-38 18z" fill="#4683c0"/><path d="M31 59l29 18v38l-29-17z" fill="#29527a"/><path d="M60 77l38-18v39l-38 17z" fill="#203f5d"/>
+            <path d="M24 65l13 7v37l-13-8z" fill="#efbd78"/><path class="atlas-wave-arm" d="M92 70l14-7v36l-14 8z" fill="#d79a59"/>
+            <path d="M41 25l26-13 23 14-26 13z" fill="#ffdf99"/><path d="M41 25l23 14v31L41 56z" fill="#efbd78"/><path d="M64 39l26-13v31L64 70z" fill="#d99c58"/>
+            <path d="M38 24l29-15 27 16-30 16z" fill="#19324b"/><path d="M38 24l26 17v10L38 36z" fill="#132639"/><path d="M64 41l30-16v12L64 51z" fill="#0f1f2e"/>
+            <path d="M48 42v4m10 2v4" stroke="#182f45" stroke-width="3"/><path d="M46 80l31 17" stroke="#e8cf95" stroke-width="6"/>
+            <g transform="rotate(29 79 88)"><path d="M75 72v-40h7v42" fill="#d7b782"/><path d="M73 37v-14h11v14z" fill="#dfc896"/><path d="M74 72c-16 4-17 25-5 31 15 8 29-4 24-18-2-7-8-8-10-13z" fill="#edac4e"/><path d="M78 41v51m3-51v51" stroke="#fff0c3" stroke-width="1"/><path d="M74 93h13" stroke="#172d42" stroke-width="4"/></g>
+          </g>
+        </svg>
+        <strong>Hello from Atlas</strong>
+      </aside>
     </section>
-
-    <section class="section cards-section">
-
-      <div class="section-heading">
-
-        <p class="eyebrow">Future Access</p>
-
-        <h2>Built for students.</h2>
-
-      </div>
-
-      <div class="card-grid">
-
-        <article class="card">
-          <h3>Private Access</h3>
-          <p>
-            A dedicated area for students connected with Hooked On Bass.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>Learning Support</h3>
-          <p>
-            Resources designed to support progress away from the lesson.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>Coming Soon</h3>
-          <p>
-            The first version will be simple, useful and built carefully over time.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-    <section class="section contact-section">
-
-      <div class="section-inner">
-
-        <p class="eyebrow">For Now</p>
-
-        <h2>Current students will be updated directly.</h2>
-
-        <p>
-          If you are already taking lessons, I’ll let you know when the portal is ready to use.
-        </p>
-
-        <a
-          href="contact.html"
-          class="button primary-button"
-        >
-          Contact
-        </a>
-
-      </div>
-
-    </section>
-
   </main>
-
-  <footer class="site-footer">
-
-    <div class="footer-inner">
-
-      <p>© 2021 Hooked On Bass. All rights reserved.</p>
-
-      <nav class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="lessons.html">Lessons</a>
-        <a href="servicing.html">Servicing</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="media.html">Media</a>
-        <a href="portal.html">Portal</a>
-        <a href="contact.html">Contact</a>
-        <a href="terms.html">Terms</a>
-      </nav>
-
-    </div>
-
-  </footer>
-
-  <script src="script.js"></script>
+  <footer class="site-footer"><div class="footer-inner"><p>© 2021 Hooked On Bass. All rights reserved.</p><nav class="footer-nav"><a href="about.html">About</a><a href="lessons.html">Lessons</a><a href="servicing.html">Servicing</a><a href="pricing.html">Pricing</a><a href="media.html">Media</a><a href="portal.html">Portal</a><a href="contact.html">Contact</a><a href="terms.html">Terms</a></nav></div></footer>
+  <script src="script.js?v=20260910"></script>
+  <script src="portal-tools.js?v=20260910"></script>
 </body>
 </html>
