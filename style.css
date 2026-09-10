@@ -134,10 +134,31 @@ img {
 }
 
 .main-nav a {
+  position: relative;
   color: var(--muted);
   text-decoration: none;
   transition: 0.3s ease;
   font-size: 0.92rem;
+}
+
+.nav-new-badge {
+  position: absolute;
+  top: 1.35rem;
+  right: -0.7rem;
+  color: #91bcff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 0 9px rgba(145,188,255,0.75);
+  pointer-events: none;
+  animation: navNewPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes navNewPulse {
+  0%, 100% { opacity: 0.38; }
+  50% { opacity: 1; }
 }
 
 .main-nav a:hover {
@@ -518,4 +539,5 @@ main {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .intro-overlay { display: none; }
+  .nav-new-badge { animation: none; opacity: 1; }
 }

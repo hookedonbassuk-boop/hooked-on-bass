@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Portal | Hooked On Bass</title>
   <meta name="description" content="Free tuning and timing tools for Hooked On Bass students." />
-  <link rel="stylesheet" href="style.css?v=20260910" />
-  <link rel="stylesheet" href="portal-tools.css?v=20260910b" />
+  <link rel="stylesheet" href="style.css?v=20260910c" />
+  <link rel="stylesheet" href="portal-tools.css?v=20260910e" />
   <link rel="icon" type="image/png" href="Logos/favicon.png" />
 </head>
 <body class="portal-page">
 
 <header class="site-header">
     <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="lessons.html">Lessons</a><a href="servicing.html">Servicing</a><a href="pricing.html">Pricing</a><a href="media.html">Media</a><a href="portal.html" aria-current="page">Portal</a><a href="contact.html">Contact</a>
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="lessons.html">Lessons</a><a href="servicing.html">Servicing</a><a href="pricing.html">Pricing</a><a href="media.html">Media</a><a href="portal.html" aria-current="page">Portal<span class="nav-new-badge">New</span></a><a href="contact.html">Contact</a>
     </nav>
     <a href="index.html" class="logo-link"><img src="Logos/hooked-on-bass-logo.png" alt="Hooked On Bass" class="site-logo" /></a>
   </header>
@@ -25,6 +25,7 @@
   <main>
     <section class="portal-tools" aria-labelledby="practice-tools-heading">
       <div class="portal-tools-heading"><h1 id="practice-tools-heading">Practice tools</h1></div>
+      <p class="ios-audio-tip" hidden><strong>iPhone audio tip:</strong> turn up media volume and tap a string or Play. If you still hear nothing, turn off Silent Mode and tap again.</p>
       <div class="tools-layout">
         <aside class="tools-menu" aria-label="Practice tool selector">
           <button class="tool-tab is-active" type="button" data-tool="tuner" aria-selected="true"><span class="tool-tab-icon" aria-hidden="true">♪</span><span><strong>Tuner</strong><small>Standard bass tunings</small></span></button>
@@ -43,7 +44,7 @@
             <button class="tuner-string" type="button" data-string-index="3"><span class="tuner-note-icon">G</span><strong>G string</strong><span class="tuner-led" aria-hidden="true"></span></button>
           </div>
           <div class="tool-controls tuner-controls"><button id="tuner-stop" class="tool-button tool-button-secondary" type="button" disabled>Stop tone</button><label class="volume-control"><span>Volume</span><input id="tuner-volume" type="range" min="0" max="100" value="90" aria-label="Tuner volume"><output id="tuner-volume-value">90%</output></label></div>
-          <p class="tool-safety-note">Start at a comfortable volume, especially when using headphones.</p>
+          <p class="tool-safety-note">Start at a comfortable volume, especially when using headphones. No sound on an older iPhone? Raise the media volume, turn off Silent Mode and tap the string again.</p>
         </section>
         <section class="tool-panel" id="tool-metronome" data-tool-panel="metronome" hidden>
           <div class="tool-panel-head"><div><p class="eyebrow">Metronome</p><h2>Build your pulse</h2></div><span class="tool-status" id="metronome-status" aria-live="polite">Stopped</span></div>
@@ -54,6 +55,7 @@
           <div class="beat-lights" id="beat-lights" aria-label="Current beat"></div>
           <div class="metronome-transport" aria-label="Metronome transport controls"><button id="metronome-play" class="tool-button" type="button">Play</button><button id="metronome-pause" class="tool-button tool-button-secondary" type="button" disabled>Pause</button><button id="metronome-stop" class="tool-button tool-button-secondary" type="button" disabled>Stop</button></div>
           <div class="metronome-options"><button id="tap-tempo" class="tap-tempo" type="button">Tap tempo</button><label class="volume-control"><span>Volume</span><input id="metronome-volume" type="range" min="0" max="100" value="90" aria-label="Metronome volume"><output id="metronome-volume-value">90%</output></label></div>
+          <p class="tool-safety-note">No sound on an older iPhone? Raise the media volume, turn off Silent Mode and tap Play again.</p>
         </section>
       </div>
     </section>
@@ -82,6 +84,6 @@
   </main>
   <footer class="site-footer"><div class="footer-inner"><p>© 2021 Hooked On Bass. All rights reserved.</p><nav class="footer-nav"><a href="about.html">About</a><a href="lessons.html">Lessons</a><a href="servicing.html">Servicing</a><a href="pricing.html">Pricing</a><a href="media.html">Media</a><a href="portal.html">Portal</a><a href="contact.html">Contact</a><a href="terms.html">Terms</a></nav></div></footer>
   <script src="script.js?v=20260910"></script>
-  <script src="portal-tools.js?v=20260910"></script>
+  <script src="portal-tools.js?v=20260910e"></script>
 </body>
 </html>

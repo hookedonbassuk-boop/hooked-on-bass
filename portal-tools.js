@@ -2,13 +2,28 @@
     "use strict";
 
     let audioContext = null;
-    const getAudioContext = () => {
-        if (!audioContext) {
+
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+        || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const iosAudioTip = document.querySelector(".ios-audio-tip");
+    if (iosAudioTip && isIOS) iosAudioTip.hidden = false;
+
+    const activateAudioContext = async () => {
+        if (navigator.audioSession && "type" in navigator.audioSession) {
+            try { navigator.audioSession.type = "playback"; } catch (_) {}
+        }
+
+        if (!audioContext || audioContext.state === "closed") {
             const Context = window.AudioContext || window.webkitAudioContext;
             if (!Context) throw new Error("Web Audio is not supported by this browser.");
             audioContext = new Context();
         }
-        if (audioContext.state === "suspended") audioContext.resume();
+
+        if (audioContext.state !== "running") await audioContext.resume();
+        if (audioContext.state !== "running") {
+            throw new Error("Audio is paused. Raise your media volume, turn off Silent Mode and tap again.");
+        }
+
         return audioContext;
     };
 
@@ -178,9 +193,10 @@
 
     const tunerTargetVolume = () => (Number(tunerVolume.value) / 100) * 0.19;
 
-    const playTuner = button => {
+    const playTuner = async button => {
         try {
-            const context = getAudioContext();
+            tunerStatus.textContent = "Starting audio…";
+            const context = await activateAudioContext();
             const frequency = Number(button.dataset.frequency);
             const previous = tunerNodes;
 
@@ -236,7 +252,7 @@
             tunerFrequency.textContent = button.dataset.stringLabel;
             tunerStatus.textContent = `Playing ${button.dataset.stringLabel}`;
         } catch (error) {
-            tunerStatus.textContent = error.message;
+            tunerStatus.textContent = error.message || "Audio could not start. Tap again.";
         }
     };
 
@@ -244,7 +260,7 @@
         const button = event.target.closest(".tuner-string");
         if (!button) return;
         if (button.classList.contains("is-playing")) stopTuner();
-        else playTuner(button);
+        else void playTuner(button);
     });
 
     tunerStop.addEventListener("click", stopTuner);
@@ -410,8 +426,7 @@
         if (wasRunning) playMetronome();
     });
 
-    const clickBeat = (time, beat, level) => {
-        const context = getAudioContext();
+    const clickBeat = (context, time, beat, level) => {
         const oscillator = context.createOscillator();
         const gain = context.createGain();
 
@@ -445,11 +460,12 @@
     const secondsPerPulse = () => 60 / snapBpm(bpmInput.value);
 
     const scheduler = () => {
-        const context = getAudioContext();
+        const context = audioContext;
+        if (!context || context.state !== "running") return;
         const signature = currentSignature();
 
         while (nextBeatTime < context.currentTime + scheduleAhead) {
-            clickBeat(nextBeatTime, currentBeat, beatLevels[currentBeat]);
+            clickBeat(context, nextBeatTime, currentBeat, beatLevels[currentBeat]);
             nextBeatTime += secondsPerPulse();
             currentBeat = (currentBeat + 1) % signature.beats;
         }
@@ -463,9 +479,10 @@
         playButton.textContent = paused ? "Resume" : "Play";
     };
 
-    function playMetronome() {
+    async function playMetronome() {
         try {
-            const context = getAudioContext();
+            status.textContent = "Starting audio…";
+            const context = await activateAudioContext();
             if (!running) currentBeat = 0;
             running = true;
             paused = false;
@@ -475,7 +492,7 @@
             scheduler();
             updateTransport();
         } catch (error) {
-            status.textContent = error.message;
+            status.textContent = error.message || "Audio could not start. Tap again.";
         }
     }
 
@@ -499,7 +516,7 @@
         updateTransport();
     }
 
-    playButton.addEventListener("click", playMetronome);
+    playButton.addEventListener("click", () => { void playMetronome(); });
     pauseButton.addEventListener("click", pauseMetronome);
     stopButton.addEventListener("click", stopMetronome);
 
@@ -522,11 +539,24 @@
         metroVolumeValue.textContent = `${metroVolume.value}%`;
     });
 
-    window.addEventListener("beforeunload", () => {
-        stopTuner();
-        stopMetronome();
-        if (audioContext) audioContext.close();
+    const resetAudioForBackground = () => {
+        try { stopTuner(); } catch (_) { tunerNodes = null; resetTunerDisplay(); }
+        try { stopMetronome(); } catch (_) {}
+        const previousContext = audioContext;
+        audioContext = null;
+        if (previousContext && previousContext.state !== "closed") {
+            try {
+                const closing = previousContext.close();
+                if (closing && typeof closing.catch === "function") closing.catch(() => {});
+            } catch (_) {}
+        }
+    };
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) resetAudioForBackground();
     });
+    window.addEventListener("pagehide", resetAudioForBackground);
+    window.addEventListener("beforeunload", resetAudioForBackground);
 
     metroVolume.value = "90";
     metroVolumeValue.textContent = "90%";
