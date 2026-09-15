@@ -31,7 +31,8 @@
 
   <header class="site-header">
 
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html" aria-current="page">Home</a>
       <a href="about.html">About</a>
       <a href="lessons.html">Lessons</a>
       <a href="servicing.html">Servicing</a>
@@ -190,37 +191,31 @@
 
   </footer>
 
-  <!-- INTRO COOLDOWN SCRIPT -->
+  <!-- Show the introduction only when arriving from outside this website. -->
 
   <script>
     const introOverlay = document.querySelector(".intro-overlay");
 
-    const introCooldownHours = 24;
+    // Remove the former 24-hour cooldown value from returning visitors.
+    try {
+      localStorage.removeItem("hookedOnBassIntroLastPlayed");
+    } catch (error) {
+      // The introduction still works if browser storage is unavailable.
+    }
 
-    const lastIntroPlayed = localStorage.getItem(
-      "hookedOnBassIntroLastPlayed"
-    );
+    let arrivedFromThisWebsite = false;
 
-    const now = Date.now();
-
-    const cooldownExpired =
-      !lastIntroPlayed ||
-      now - Number(lastIntroPlayed) >
-      introCooldownHours * 60 * 60 * 1000;
-
-    if (cooldownExpired) {
-
-      localStorage.setItem(
-        "hookedOnBassIntroLastPlayed",
-        now.toString()
-      );
-
-    } else {
-
-      if (introOverlay) {
-        introOverlay.remove();
+    if (document.referrer) {
+      try {
+        arrivedFromThisWebsite =
+          new URL(document.referrer).origin === window.location.origin;
+      } catch (error) {
+        arrivedFromThisWebsite = false;
       }
+    }
 
+    if (arrivedFromThisWebsite && introOverlay) {
+      introOverlay.remove();
     }
   </script>
 
